@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sisters of Presentation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #1d3557;
+  --accent: #457b9d;
+  --light: #f1f5f9;
+  --dark: #0b2545;
+}
+
+/* GLOBAL */
+* { margin:0; padding:0; box-sizing:border-box; font-family: Arial; }
+body { background: var(--light); }
+
+/* HEADER */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: var(--primary);
+  z-index: 1000;
+}
+
+.logo img { height: 65px; }
+
+/* NAV */
+nav { flex:1; }
+
+.menu {
+  list-style:none;
+  display:flex;
+  justify-content:center;
+}
+
+.menu li {
+  position: relative;
+  margin:0 8px;
+}
+
+.menu a {
+  padding:8px 18px;
+  color:white;
+  text-decoration:none;
+  border-radius:25px;
+  transition:0.3s;
+}
+
+.menu a:hover {
+  background: var(--accent);
+}
+
+/* DROPDOWN */
+.dropdown-content {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  background: white;
+  min-width: 180px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  z-index: 2000;
+}
+
+.dropdown:hover .dropdown-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background: var(--light);
+}
+
+/* SEARCH */
+.search-box {
+  background:white;
+  border-radius:20px;
+  padding:5px 10px;
+}
+
+/* HERO */
+.hero {
+  margin-top:80px;
+  height:100vh;
+  position:relative;
+  overflow:hidden;
+}
+
+.slide {
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  transition:opacity 1.5s ease-in-out;
+}
+
+.slide.active { opacity:1; }
+
+.hero h1 {
+  position:relative;
+  color:white;
+  font-size:3.5rem;
+  text-align:center;
+  top:40%;
+  text-shadow:2px 2px 12px rgba(0,0,0,0.7);
+}
+
+/* TAGLINE */
+.hero-bar {
+  background: var(--accent);
+  color:white;
+  text-align:center;
+  padding:18px;
+}
+
+.hero-bar p {
+  font-family:'Great Vibes';
+  font-size:2rem;
+}
+
+/* ================= INSTITUTES ================= */
+.institutes {
+  padding: 70px 20px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  text-align: center;
+}
+
+.institutes h2 {
+  color: white;
+  margin-bottom: 25px;
+}
+
+.inst-slider {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.inst-slide {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px;
+  gap: 30px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+}
+
+.inst-slide.active {
+  display: flex;
+}
+
+.inst-text {
+  flex: 1;
+  text-align: left;
+  color: white;
+}
+
+.inst-text p {
+  color: #e6eef7;
+  margin-bottom: 15px;
+}
+
+.inst-text button {
+  padding: 10px 18px;
+  border: none;
+  background: white;
+  color: var(--primary);
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.inst-image {
+  flex: 1.3;
+}
+
+.inst-image img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* ICON BAR */
+.inst-icons {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 20px 10px;
+  flex-wrap: wrap;
+}
+
+.inst-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+.inst-icon img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.inst-icon span {
+  margin-top: 5px;
+  font-size: 0.8rem;
+  color: var(--primary);
+}
+
+.inst-icon.active {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.inst-icon.active img {
+  border: 2px solid var(--accent);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* EVENTS */
+.events {
+  padding:60px 20px;
+}
+
+.events h2 {
+  text-align:center;
+  margin-bottom:20px;
+  color: var(--primary);
+}
+
+.event-container {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.event-card {
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.event-card img {
+  width:100%;
+  height:150px;
+  object-fit:cover;
+}
+
+.event-content {
+  padding:15px;
+}
+
+/* MEDIA */
+.media {
+  padding:60px 20px;
+  background: var(--primary);
+}
+
+.media h2 {
+  text-align:center;
+  margin-bottom:20px;
+  color:white;
+}
+
+.media-container {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.media iframe {
+  width:100%;
+  height:220px;
+  border-radius:12px;
+}
+
+/* FOOTER */
+footer {
+  background: var(--dark);
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo"><img src="logo.jpg"></div>
+
+  <nav>
+    <ul class="menu">
+
+      <li class="dropdown">
+        <a href="#">Home ▾</a>
+        <ul class="dropdown-content">
+          <li><a href="#">Overview</a></li>
+          <li><a href="#">Highlights</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a href="#">About ▾</a>
+        <ul class="dropdown-content">
+          <li><a href="#">History</a></li>
+          <li><a href="#">Mission</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a href="#">Ministry ▾</a>
+        <ul class="dropdown-content">
+          <li><a href="#">Education</a></li>
+          <li><a href="#">Healthcare</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a href="#">Join Us ▾</a>
+        <ul class="dropdown-content">
+          <li><a href="#">Volunteer</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a href="#">Support ▾</a>
+        <ul class="dropdown-content">
+          <li><a href="#">Donate</a></li>
+          <li><a href="#">Sponsorship</a></li>
+        </ul>
+      </li>
+
+    </ul>
+  </nav>
+
+  <div class="search-box">
+    <input placeholder="Search">
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="slide active" style="background-image:url('head.jpg')"></div>
+  <div class="slide" style="background-image:url('image1.jpg')"></div>
+  <div class="slide" style="background-image:url('image2.jpg')"></div>
+
+  <h1>"Not words but Deeds"</h1>
+</div>
+
+<div class="hero-bar">
+  <p>Inspiring lives through service and faith</p>
+</div>
+
+<!-- INSTITUTES -->
+<section class="institutes">
+  <h2>Institutes Under Our Province</h2>
+
+  <div class="inst-slider">
+
+    <div class="inst-slide active">
+      <div class="inst-text">
+        <h3>St. Mary’s School</h3>
+        <p>St. Mary’s Academy/High School in Ponda, Goa, is a reputable co-educational institution providing education in Ponda, with a focus on academic excellence. It has a strong local reputation, rated highly in the area, offering a supportive environment for students' personal and educational growth</p>
+        <button>View More</button>
+      </div>
+      <div class="inst-image">
+        <img src="inst1.jpg">
+      </div>
+    </div>
+
+    <div class="inst-slide">
+      <div class="inst-text">
+        <h3>Presentation College</h3>
+        <p>Presentation Convent High School/Higher Secondary is a Catholic minority institution, commonly run by the Franciscan Hospitaller Sisters or Presentation Sisters, focusing on holistic, value-based education for girls (and sometimes co-ed). Founded on principles of character development, these schools emphasize academic excellence, moral integrity, and social service, often spanning from primary to senior secondary levels.</p>
+        <button>View More</button>
+      </div>
+      <div class="inst-image">
+        <img src="inst2.jpg">
+      </div>
+    </div>
+
+    <div class="inst-slide">
+      <div class="inst-text">
+        <h3>Health Centre</h3>
+        <p>A health centre is a community-based facility providing essential, accessible primary healthcare services, acting as the first point of contact for patients. These centres offer comprehensive services, including general medical care, preventive care, maternal/child health services, and, in some cases, mental health and dental services, often focusing on underserved areas.</p>
+        <button>View More</button>
+      </div>
+      <div class="inst-image">
+        <img src="inst3.jpg">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="inst-icons">
+    <div class="inst-icon active" data-index="0">
+      <img src="inst1.jpg"><span>School</span>
+    </div>
+
+    <div class="inst-icon" data-index="1">
+      <img src="inst2.jpg"><span>College</span>
+    </div>
+
+    <div class="inst-icon" data-index="2">
+      <img src="inst3.jpg"><span>Health</span>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="events">
+  <h2>Latest Events</h2>
+
+  <div class="event-container">
+    <div class="event-card">
+      <img src="event1.jpg">
+      <div class="event-content"><h3>Community Outreach</h3></div>
+    </div>
+
+    <div class="event-card">
+      <img src="event2.jpg">
+      <div class="event-content"><h3>Youth Program</h3></div>
+    </div>
+
+    <div class="event-card">
+      <img src="event3.jpg">
+      <div class="event-content"><h3>Health Camp</h3></div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA -->
+<section class="media">
+  <h2>Media</h2>
+
+  <div class="media-container">
+    <iframe src="https://www.youtube.com/embed/V6tz98VBzHk"></iframe>
+    <iframe src="https://www.youtube.com/embed/Ig7XczejsHU"></iframe>
+    <iframe src="https://www.youtube.com/embed/KGHUp4T_PnE"></iframe>
+  </div>
+</section>
+
+<footer>
+  © 2026 Sisters of Presentation
+</footer>
+
+<script>
+let slides = document.querySelectorAll(".slide");
+let index = 0;
+
+setInterval(() => {
+  slides[index].classList.remove("active");
+  index = (index + 1) % slides.length;
+  slides[index].classList.add("active");
+}, 4000);
+
+let instSlides = document.querySelectorAll(".inst-slide");
+let icons = document.querySelectorAll(".inst-icon");
+let instIndex = 0;
+
+function setActive(i){
+  instSlides.forEach(s => s.classList.remove("active"));
+  icons.forEach(ic => ic.classList.remove("active"));
+
+  instSlides[i].classList.add("active");
+  icons[i].classList.add("active");
+
+  instIndex = i;
+}
+
+setInterval(() => {
+  setActive((instIndex + 1) % instSlides.length);
+}, 4000);
+
+icons.forEach(icon => {
+  icon.addEventListener("click", () => {
+    setActive(parseInt(icon.dataset.index));
+  });
+});
+</script>
+
+</body>
+</html>
